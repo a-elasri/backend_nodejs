@@ -1,7 +1,9 @@
 const express=require('express')
 const app=express()
-const port=8080 || process.env.PORT
+const port=8081 || process.env.PORT
 const cors=require('cors')
+const passport = require('passport')
+
 const bodyParser=require('body-parser')
 
 const mongoose=require('mongoose')
@@ -15,6 +17,9 @@ app.use('/info',require('./routes/cabinet.route'))
 app.use('/info',require('./routes/medecin.route'))
 app.use('/info',require('./routes/consultation.route'))
 app.use('/info',require('./routes/service.route'))
+
+app.use(passport.initialize)
+require('./config/passport')(passport)
 
 app.listen(port,()=>{
     console.log('port runing on '+port)

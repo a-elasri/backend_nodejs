@@ -91,6 +91,26 @@ router.put('/deleteServiceToCabinet3/:cabinetID/:seviceID',(req,res)=>{
     res.send('cabinet updated');
 })
 
+
+router.put('/addMedecinToCabinet/:cabinetID/:medecinID',(req,res)=>{
+    Cabinet.findOne({IdCabinet: req.params.cabinetID }, function(err, cabinet){
+        if(err){
+            console.log(err)
+            res.json(err)
+        } else {if(cabinet){
+            if(req.params.medecinID){
+                cabinet.list_IdMedecins.push(req.params.medecinID)
+            }
+            cabinet.save(function(err){
+                if(err) console.log(err)
+                else console.log('cabinet got updated...')
+            });
+        }}
+    });
+    res.send('medecin to cabinet updated');
+})
+
+
 router.put('/deleteMedecinToCabinet/:cabinetID/:medecinID',(req,res)=>{
     Cabinet.findOne({IdCabinet: req.params.cabinetID }, function(err, cabinet){
         if(err){

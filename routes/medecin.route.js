@@ -1,5 +1,6 @@
 const express=require('express')
 const Medecin = require('../models/medecin.model')
+const Cabinet = require("../models/cabinet.model");
 const router=express.Router()
 
 router.post('/addMedecin',(req,res)=>{
@@ -65,4 +66,5 @@ router.delete('/deleteMedecin/:medecinID',(req,res)=>{
         .then(result => res.status(200).json({ result }))
         .catch((error) => res.status(404).json({msg: 'Medecin not found' }))
 })
+
 module.exports = router

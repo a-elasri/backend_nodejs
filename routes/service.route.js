@@ -1,7 +1,5 @@
 const express=require('express')
 const Service = require('../models/service.model')
-const Medecin = require("../models/medecin.model");
-const Consultation = require("../models/consultation.model");
 const router=express.Router()
 
 router.post("/createService",(req, res) => {

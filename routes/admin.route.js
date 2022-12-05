@@ -1,5 +1,6 @@
 const express=require('express')
 const Admin = require('../models/admin.model')
+var jwt = require('jwt-simple')
 const router=express.Router()
 
 router.post('/signup',(req,res)=>{
@@ -42,8 +43,36 @@ router.post('/signin',(req,res)=>{
             res.json(err)
         }else{
             res.json(user)
+            console.log(
+                "qwertyuio"
+            )
         }
     })
+})
+
+router.post('/authentication',(req,res)=>{
+    Admin.findOne({email: req.body.email}, function (err, user) {
+            if (err){
+                console.log(err)
+                res.json(err)
+            }
+            if (user==null) {
+                res.status(403).send({success: false, msg: 'Échec de l\'authentification, utilisateur introuvable'})
+            } else {
+                user.comparePassword(req.body.password, function (err, isMatch) {
+                    if (isMatch && !err) {
+                        var token = jwt.encode(user, "secret");
+                        res.json({success: true, token: token})
+                    } else {
+                        return res.status(403).send({
+                            success: false,
+                            msg: 'Échec de l\'authentification, mot de passe erroné'
+                        })
+                    }
+                })
+            }
+        }
+    )
 })
 
 router.get('/users', (request, response) => {

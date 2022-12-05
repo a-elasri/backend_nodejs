@@ -31,4 +31,5 @@ router.delete('/deleteConsultation/:consultationID',(req,res)=>{
         .then(result => res.status(200).json({ result }))
         .catch((error) => res.status(404).json({msg: 'Consultation not found' }))
 })
+
 module.exports = router
